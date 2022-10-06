@@ -2439,47 +2439,51 @@ let loadWtrl = async () => {
 
     let sta = [
         {
-            staname: "station_01",
-            latlon: [12.8661616, 100.9989804],
+            stname: "station_01",
+            latlon: [12.846510200000028, 100.9376361],
             measure: 275.5
         }, {
-            staname: "station_02",
+            stname: "station_02",
             latlon: [12.848099999999983, 100.95313000000002],
             measure: 244
         }, {
-            staname: "station_03",
-            latlon: [12.846510200000028, 100.9376361],
+            stname: "station_03",
+            latlon: [12.8661616, 100.9989804],
             measure: 298
         }, {
-            staname: "station_04",
+            stname: "station_04",
             latlon: [12.694406999999996, 101.44470699999997],
             measure: 294
         }, {
-            staname: "station_05",
+            stname: "station_05",
             latlon: [12.703484000000008, 101.468717],
             measure: 280
         }, {
-            staname: "station_06",
+            stname: "station_06",
             latlon: [12.70139960000001, 101.49543049999],
             measure: 435
         }, {
-            staname: "station_07",
+            stname: "station_07",
             latlon: [12.985111299999994, 101.6776677],
             measure: 380.6
         }, {
-            staname: "station_08",
+            stname: "station_08",
             latlon: [12.909515899999995, 101.71460159999998],
             measure: 512
         }, {
-            staname: "station_09",
+            stname: "station_09",
             latlon: [12.836749900000017, 101.73254899999998],
             measure: 550.5
         }]
 
     sta.map(async (i) => {
-        let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get2.php', { station: i.staname, limit: 1 });
+        let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get-by-day.php', { stname: i.stname, limit: 1 });
         resSt01.then(r => {
             let d = r.data.data[0];
+
+            let num = i.measure - Number(d.dept);
+            let a = num.toFixed(2)
+
             let marker = L.marker(i.latlon, {
                 icon: iconblue,
                 name: 'lyr',
@@ -2488,49 +2492,58 @@ let loadWtrl = async () => {
             // console.log(i.measure);
             marker.addTo(map)
             marker.bindPopup(`<div style="font-family:'Kanit'"> 
-                        ชื่อสถานี : ${i.staname} <br>
-                        ระดับน้ำ : ${i.measure - Number(d.deep).toFixed(1) < 1 ? 0 : i.measure - Number(d.deep).toFixed(1)} mm.<br>
-                        ความชื้นสัมพัทธ์ : ${Number(d.humidity).toFixed(1)} %.<br>
-                        อุณหภูมิ : ${Number(d.temperature).toFixed(1)} องศาเซลเซียส<br>
-                        ดูกราฟ <span style="font-size: 20px; color:#006fa2; cursor: pointer;" onclick="wtrlModal('${i.staname}', ${i.measure})"><i class="bi bi-file-earmark-bar-graph"></i></span>
-                        </div>`
+            ชื่อสถานี : ${i.stname} <br>
+            ระดับน้ำ : ${a < 1 ? 0 : a} mm.<br>
+            ความชื้นสัมพัทธ์ : ${Number(d.humi).toFixed(1)} %.<br>
+            อุณหภูมิ : ${Number(d.temp).toFixed(1)} องศาเซลเซียส<br>
+            ดูกราฟ <span style="font-size: 20px; color:#006fa2; cursor: pointer;" onclick="wtrlModal('${i.stname}','${i.measure}')"><i class="bi bi-file-earmark-bar-graph"></i></span>
+            </div>`
             )
         })
     })
 }
-let wtrlModal = (stname, measure) => {
-    // console.log(measure);
-    // 
+
+
+let wtrlModal = (staname, measure) => {
+    // console.log(staname);
     let arrDept = [];
     let arrTemp = [];
     let arrHumi = [];
-    axios.post("https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get-by-day.php", { stname }).then(r => {
-        // console.log(r);
+    axios.post("https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get-by-day.php", { stname: staname, limit: 10000 }).then(r => {
+        // console.log(r.data.data);
         r.data.data.map(i => {
+            let num = measure - Number(i.dept);
+            let a = num.toFixed(2)
+
             arrDept.push({
                 "date": i.dt,
-                "value": measure - i.dept < 1 ? 0.0 : Math.round(measure - i.dept)
+                "value": a < 1 ? 0 : a
             });
             arrTemp.push({
                 "date": i.dt,
-                "value": Math.round(i.temp)
+                "value": Math.round(Number(i.temp))
             });
             arrHumi.push({
                 "date": i.dt,
-                "value": Math.round(i.humi)
+                "value": Math.round(Number(i.humi))
             });
         })
     })
 
+    $('#chart_sta').text(staname).hide()
     setTimeout(() => {
-        // console.log(arrDept, arrTemp, arrHumi);
+        $("#wtrlModal").modal("show");
+    }, 1500)
+
+    setTimeout(() => {
+        $('#chart_sta').fadeIn();
         wtrlChart(arrDept, "depthChart", "ระดับน้ำ (cm.)");
         wtrlChart(arrTemp, "tempChart", "อุณหภูมิ (°C)");
         wtrlChart(arrHumi, "humiChart", "ความชื้น (%)");
-    }, 500)
+        // console.log(arrDept, arrTemp, arrHumi);
+    }, 2000)
 
 
-    $("#wtrlModal").modal("show");
 
 }
 let wtrlChart = (arrData, div, unit) => {
@@ -2539,6 +2552,7 @@ let wtrlChart = (arrData, div, unit) => {
     // Create chart instance
     var chart = am4core.create(div, am4charts.XYChart);
 
+    // console.log(arrData)
     // Add data
     chart.data = arrData;
 
@@ -2563,6 +2577,8 @@ let wtrlChart = (arrData, div, unit) => {
     series.stroke = am4core.color("#00b80f");
 
     // Drop-shaped tooltips
+    series.tooltip.getFillFromObject = false;
+    series.tooltip.background.fill = am4core.color("#00b80f");
     series.tooltip.background.cornerRadius = 20;
     series.tooltip.background.strokeOpacity = 0;
     series.tooltip.pointerOrientation = "vertical";

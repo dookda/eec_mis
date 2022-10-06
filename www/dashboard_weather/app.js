@@ -310,7 +310,7 @@ let zoomExtent = async (lyr, code) => {
 
   await axios.get(url + `/eec-api/get-bound/${lyr}/${code}`).then(r => {
     let geom = JSON.parse(r.data.data[0].geom)
-    console.log(r.data.data[0].geom)
+    // console.log(r.data.data[0].geom)
     var polygon = L.geoJson(geom, { color: "red", name: "bound", fillOpacity: 0.0 }).addTo(map);
 
     $("#tab").dataTable().fnDestroy();
