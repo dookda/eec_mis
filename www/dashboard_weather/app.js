@@ -43,12 +43,12 @@ let map = L.map("map", {
   zoom: 8
 });
 
-const url = "https://engrids.soc.cmu.ac.th/api";
+const url = "https://eec-mis.onep.go.th/api";
 // const url = 'http://localhost:3700';
-const eecGeoserver = "https://engrids.soc.cmu.ac.th/geoserver/eec/wms?";
-const eecGeoserverWFS = "https://engrids.soc.cmu.ac.th/geoserver";
+const eecGeoserver = "https://eec-mis.onep.go.th/geoserver/eec/wms?";
+const eecGeoserverWFS = "https://eec-mis.onep.go.th/geoserver";
 
-var L53 = 'https://engrids.soc.cmu.ac.th/geoserver/eec/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=eec%3Aa__53_9w_reser63_3p&maxFeatures=50&outputFormat=application%2Fjson'
+var L53 = 'https://eec-mis.onep.go.th/geoserver/eec/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=eec%3Aa__53_9w_reser63_3p&maxFeatures=50&outputFormat=application%2Fjson'
 $(document).ready(() => {
   layermark(L53, 53)
   $("#amp").empty().append(`<option value="eec">เลือกอำเภอ</option>`);

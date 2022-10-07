@@ -31,10 +31,10 @@ $('#btnAccept').click(() => {
     setAccept = sessionStorage.setItem('accept', 'Yes');
 })
 
-const url = "https://engrids.soc.cmu.ac.th/api";
+const url = "https://eec-mis.onep.go.th/api";
 // const url = 'http://localhost:3700';
-const eacGeoserver = "https://engrids.soc.cmu.ac.th/geoserver";
-const eecGeoserverWMS = "https://engrids.soc.cmu.ac.th/geoserver/eec/wms?";
+const eacGeoserver = "https://eec-mis.onep.go.th/geoserver";
+const eecGeoserverWMS = "https://eec-mis.onep.go.th/geoserver/eec/wms?";
 
 
 let latlng = {
@@ -82,7 +82,7 @@ const gter = L.tileLayer('https://{s}.google.com/vt/lyrs=t,m&x={x}&y={y}&z={z}',
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 });
 
-const rainanual = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const rainanual = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:rain_anual.tif",
     name: "lyr",
     format: "image/png",
@@ -90,7 +90,7 @@ const rainanual = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/w
     zIndex: 2
 });
 
-const ecobound = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const ecobound = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:a__82_landscape",
     name: "lyr",
     format: "image/png",
@@ -98,7 +98,7 @@ const ecobound = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wm
     zIndex: 2
 });
 
-const lu = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const lu = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:a__46_lu_eec_61",
     name: "lyr",
     format: "image/png",
@@ -106,7 +106,7 @@ const lu = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
     zIndex: 1
 });
 
-const muni = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const muni = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:a__04_municiple",
     name: "lyr",
     format: "image/png",
@@ -114,7 +114,7 @@ const muni = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?",
     zIndex: 3
 });
 
-const tam = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const tam = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:a__03_tambon_eec",
     name: "lyr",
     format: "image/png",
@@ -123,7 +123,7 @@ const tam = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", 
     // CQL_FILTER: 'pro_code=20 OR pro_code=21 OR pro_code=22 OR pro_code=23 OR pro_code=24 OR pro_code=25 OR pro_code=26 OR pro_code=27'
 });
 
-const amp = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const amp = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
     layers: "eec:a__02_amphoe_eec",
     name: "lyr",
     format: "image/png",
@@ -917,7 +917,7 @@ let hchart = (dat, div, unit) => {
 }
 
 let showRainweek = async (pnt, size, bbox) => {
-    let urlWeek = "https://engrids.soc.cmu.ac.th/geoserver/wms?SERVICE=WMS" +
+    let urlWeek = "https://eec-mis.onep.go.th/geoserver/wms?SERVICE=WMS" +
         "&VERSION=1.1.1&REQUEST=GetFeatureInfo" +
         "&QUERY_LAYERS=" + rainLyr +
         "&LAYERS=" + rainLyr +
@@ -946,7 +946,7 @@ let showRainweek = async (pnt, size, bbox) => {
 }
 
 let showrainForecast = async (pnt, size, bbox) => {
-    let urlWeek = "https://engrids.soc.cmu.ac.th/geoserver/wms?SERVICE=WMS" +
+    let urlWeek = "https://eec-mis.onep.go.th/geoserver/wms?SERVICE=WMS" +
         "&VERSION=1.1.1&REQUEST=GetFeatureInfo" +
         "&QUERY_LAYERS=" + rainforecastLyr +
         "&LAYERS=" + rainforecastLyr +
@@ -999,7 +999,7 @@ map.on("click", async (e) => {
         $("#chart-f").hide();
     }
 
-    let urlฺAnual = "https://engrids.soc.cmu.ac.th/geoserver/wms?SERVICE=WMS" +
+    let urlฺAnual = "https://eec-mis.onep.go.th/geoserver/wms?SERVICE=WMS" +
         "&VERSION=1.1.1&REQUEST=GetFeatureInfo" +
         "&QUERY_LAYERS=eec:rain_anual.tif" +
         "&LAYERS=eec:rain_anual.tif" +
@@ -1023,7 +1023,7 @@ map.on("click", async (e) => {
         }
     });
 
-    let urlฺWeeknow = "https://engrids.soc.cmu.ac.th/geoserver/wms?SERVICE=WMS" +
+    let urlฺWeeknow = "https://eec-mis.onep.go.th/geoserver/wms?SERVICE=WMS" +
         "&VERSION=1.1.1&REQUEST=GetFeatureInfo" +
         "&QUERY_LAYERS=eec:rain_w" + yweek[1] + ".tif" +
         "&LAYERS=eec:rain_w" + yweek[1] + ".tif" +

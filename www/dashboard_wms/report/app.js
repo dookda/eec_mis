@@ -31,8 +31,8 @@ $('#btnAccept').click(() => {
     setAccept = sessionStorage.setItem('accept', 'Yes');
 })
 
-const url = "https://engrids.soc.cmu.ac.th/api";
-const eecGeoserver = "https://engrids.soc.cmu.ac.th/geoserver";
+const url = "https://eec-mis.onep.go.th/api";
+const eecGeoserver = "https://eec-mis.onep.go.th/geoserver";
 
 let latlng = {
     lat: 13.205567,
@@ -956,7 +956,7 @@ let callAttribute = (lyr) => {
         table.destroy();
         $('#attrib').empty();
     }
-    let geojson = "https://engrids.soc.cmu.ac.th/geoserver/eec/ows?service=WFS" +
+    let geojson = "https://eec-mis.onep.go.th/geoserver/eec/ows?service=WFS" +
         "&version=1.0.0" +
         "&request=GetFeature" +
         "&typeName=eec%3A" + lyr +
@@ -1232,7 +1232,6 @@ let loadMeteo = async () => {
 }
 
 const responseGwater = axios.get(url + "/gwater-api/getdata");
-// const api_3 = axios.get("https://engrids.soc.cmu.ac.th:3700/api/rankWater/");
 
 let onEachFeatureGw = (feature, layer) => {
     // console.log(lyr.properties);
@@ -1462,7 +1461,7 @@ $("input[name='basemap']").change(async (r) => {
     base[`${basemap}`].addTo(map);
 })
 
-let eecUrl = "https://engrids.soc.cmu.ac.th/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&legend_options=fontName:Kanit&LAYER=";
+let eecUrl = "https://eec-mis.onep.go.th/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&legend_options=fontName:Kanit&LAYER=";
 let gistdaUrl = "http://ocean.gistda.or.th:80/geoserver/coastalradar/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=";
 let costUrl = "http://marinegiscenter.dmcr.go.th/cgi-bin/mapserv.exe?MAP=%2Fms4w%2Fapps%2Fgeomoose2%2Fmaps%2F%2Fdmcr%2Fgroup1%2Fshoreline_2559.map?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=";
 // let rtiUrl = "https://rti2dss.com:8443/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=";

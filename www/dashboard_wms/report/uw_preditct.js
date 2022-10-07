@@ -1,4 +1,4 @@
-const url = 'http://localhost:3700';
+// const url = 'http://localhost:3700';
 
 let UW_prov_all = (code) => {
     axios.post(url + "/predict_UW_industry/data/prov").then(async (r) => {

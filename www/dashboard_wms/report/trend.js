@@ -65,7 +65,7 @@ let datlu_envi = [];
 $(document).ready(function () {
     forecast()
 })
-const url = "https://engrids.soc.cmu.ac.th/api";
+// const url = "https://engrids.soc.cmu.ac.th/api";
 
 let forecast = async () => {
     //pop normal  

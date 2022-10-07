@@ -44,7 +44,7 @@ let map = L.map("map", {
   zoom: 8
 });
 
-const url = "https://engrids.soc.cmu.ac.th/api";
+const url = "https://eec-mis.onep.go.th/api";
 
 let iconblue = L.icon({
   iconUrl: './marker/location-pin-blue.svg',
@@ -100,7 +100,7 @@ const ghyb = L.tileLayer("https://{s}.google.com/vt/lyrs=y,m&x={x}&y={y}&z={z}",
   subdomains: ["mt0", "mt1", "mt2", "mt3"]
 });
 
-const tam = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const tam = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
   layers: "eec:a__03_tambon_eec",
   format: "image/png",
   transparent: true,
@@ -109,7 +109,7 @@ const tam = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", 
   // CQL_FILTER: 'pro_code=20 OR pro_code=21 OR pro_code=24'
 });
 
-const amp = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const amp = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
   layers: "eec:a__02_amphoe_eec",
   format: "image/png",
   transparent: true,
@@ -118,7 +118,7 @@ const amp = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", 
   // CQL_FILTER: 'pro_code=20 OR pro_code=21 OR pro_code=24'
 });
 
-const pro = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const pro = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
   layers: "eec:a__01_prov_eec",
   format: "image/png",
   transparent: true,
@@ -126,12 +126,12 @@ const pro = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", 
   // CQL_FILTER: 'pro_code=20 OR pro_code=21 OR pro_code=24'
 });
 
-const airqualityeec = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const airqualityeec = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
   layers: 'eec:a__65_airquality_eec',
   format: 'image/png',
   transparent: true
 });
-const pollution = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/eec/wms?", {
+const pollution = L.tileLayer.wms("https://eec-mis.onep.go.th/geoserver/eec/wms?", {
   layers: 'eec:a__81_pollution_group',
   format: 'image/png',
   transparent: true,
