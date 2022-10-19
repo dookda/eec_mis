@@ -1840,12 +1840,13 @@ let loadWtrl = async () => {
     }]
   mkWrl = L.layerGroup()
   sta.map(async (i) => {
-    let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get-by-day.php', { stname: i.stname, limit: 1 });
+    let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get2.php', { station: i.stname, limit: 1 });
     resSt01.then(r => {
       let d = r.data.data[0];
-      // console.log(d)
-      let num = i.measure - Number(d.dept);
+      // console.log(r.data.data)
+      let num = i.measure - Number(d.deep);
       let a = num.toFixed(2)
+      // console.log(a)
 
       let marker = L.marker(i.latlon, {
         icon: iconblue,
@@ -1854,10 +1855,13 @@ let loadWtrl = async () => {
       });
       // marker.addTo(map)
       marker.bindPopup(`<div style="font-family:'Kanit'"> 
+                      <b> ข้อมูลล่าสุด ณ จุดตรวจวัดระดับน้ำผิวดิน </b> <br> 
+                      วันที่: ${d.d} เวลา: ${d.t} น.<br>
                       ชื่อสถานี : ${i.stname} <br>
                       ระดับน้ำ : ${a < 1 ? 0 : a} mm.<br>
-                      ความชื้นสัมพัทธ์ : ${Number(d.humi).toFixed(1)} %.<br>
-                      อุณหภูมิ : ${Number(d.temp).toFixed(1)} องศาเซลเซียส<br>
+                      ความชื้นสัมพัทธ์ : ${Number(d.humidity).toFixed(1)} %.<br>
+                      อุณหภูมิ : ${Number(d.temperature).toFixed(1)} องศาเซลเซียส<br>
+                      
                       ดูกราฟ <span style="font-size: 20px; color:#006fa2; cursor: pointer;" onclick="wtrlModal('${i.stname}','${i.measure}')"><i class="bi bi-file-earmark-bar-graph"></i></span>
                       </div>`
       )

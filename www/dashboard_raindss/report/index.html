@@ -416,6 +416,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
+                    <br>
+                    <h5 class="text-center"> <b> ข้อมูลเฉลี่ยรายวัน ณ จุดตรวจวัดระดับน้ำผิวดิน</b></h5>
+                    <h5 class="text-center">ชื่อสถานี: <span id="chart_sta"></span></h5>
+                    <br>
                     <div class="hchart" id="depthChart"></div>
                     <p></p>
                     <div class="hchart" id="tempChart"></div>
@@ -435,6 +439,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
+                    <br>
+                    <h5 class="text-center"> <b> ข้อมูลย้อนหลัง ณ จุดตรวจวัดคุณภาพน้ำผิวดิน</b></h5>
+                    <h5 class="text-center">ชื่อสถานี: <span id="chart_sta2"></span></h5>
+                    <br>
                     <div class="hchart" id="pHChart"></div>
                     <p></p>
                     <div class="hchart" id="TempChart"></div>
@@ -485,24 +493,15 @@
     <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script> -->
-
-    <!-- <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script> -->
-
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
-    <!-- <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script> -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- <script src="./../marker.js"></script> -->
     <script src="app.js"></script>

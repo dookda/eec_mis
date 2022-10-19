@@ -2476,11 +2476,11 @@ let loadWtrl = async () => {
         }]
 
     sta.map(async (i) => {
-        let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get-by-day.php', { stname: i.stname, limit: 1 });
+        let resSt01 = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrl-api-get2.php', { station: i.stname, limit: 1 });
         resSt01.then(r => {
             let d = r.data.data[0];
 
-            let num = i.measure - Number(d.dept);
+            let num = i.measure - Number(d.deep);
             let a = num.toFixed(2)
 
             let marker = L.marker(i.latlon, {
@@ -2491,10 +2491,12 @@ let loadWtrl = async () => {
             // console.log(i.measure);
             marker.addTo(map)
             marker.bindPopup(`<div style="font-family:'Kanit'"> 
+            <b> ข้อมูลล่าสุด ณ จุดตรวจวัดระดับน้ำผิวดิน </b> <br> 
+            วันที่: ${d.d} เวลา: ${d.t} น.<br>
             ชื่อสถานี : ${i.stname} <br>
             ระดับน้ำ : ${a < 1 ? 0 : a} mm.<br>
-            ความชื้นสัมพัทธ์ : ${Number(d.humi).toFixed(1)} %.<br>
-            อุณหภูมิ : ${Number(d.temp).toFixed(1)} องศาเซลเซียส<br>
+            ความชื้นสัมพัทธ์ : ${Number(d.humidity).toFixed(1)} %.<br>
+            อุณหภูมิ : ${Number(d.temperature).toFixed(1)} องศาเซลเซียส<br>
             ดูกราฟ <span style="font-size: 20px; color:#006fa2; cursor: pointer;" onclick="wtrlModal('${i.stname}','${i.measure}')"><i class="bi bi-file-earmark-bar-graph"></i></span>
             </div>`
             )
@@ -2631,6 +2633,11 @@ let loadWqua = async () => {
         let dat_ec = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrq-api-cherry.php', { param: "ec", sort: "DESC", stname: i.staname, limit: 1 });
         dat_ec.then(r => {
             let A1 = r.data.data;
+            var testDate = r.data.data[0].t
+            var datenow = moment(testDate).format('DD/MM/YYYY')
+            var timenow = moment(testDate).format('HH:mm')
+            // console.log(datenow)
+            // console.log(timenow)
 
             let dat_ph = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrq-api-cherry.php', { param: "ph", sort: "DESC", stname: i.staname, limit: 1 });
             dat_ph.then(r => {
@@ -2643,7 +2650,10 @@ let loadWqua = async () => {
                     let dat_tmp = axios.post('https://eec-onep.soc.cmu.ac.th/api/wtrq-api-cherry.php', { param: "tmp", sort: "DESC", stname: i.staname, limit: 1 });
                     dat_tmp.then(r => {
                         let D1 = r.data.data;
-                        sum_data.push({ staname: i.staname, latlon: i.latlon, ec: Number(A1[0].val), ec_time: A1[0].t, ph: Number(B1[0].val), ph_time: B1[0].t, do: Number(C1[0].val), do_time: C1[0].t, tmp: Number(D1[0].val), tmp_time: D1[0].t, tmp: Number(D1[0].val), tmp_time: D1[0].t });
+                        sum_data.push({
+                            staname: i.staname, latlon: i.latlon, ec: Number(A1[0].val), ec_time: A1[0].t, ph: Number(B1[0].val), ph_time: B1[0].t, do: Number(C1[0].val), do_time: C1[0].t, tmp: Number(D1[0].val),
+                            tmp_time: D1[0].t, tmp: Number(D1[0].val), tmp_time: D1[0].t, date: datenow, time: timenow
+                        });
 
                         if (sum_data.length == '3') {
                             marker_Wqua(sum_data)
@@ -2665,6 +2675,7 @@ let marker_Wqua = (d) => {
     });
     staW_qua = L.layerGroup()
     let data = d;
+    // console.log(data)
     data.map(i => {
         let marker = L.marker(i.latlon, {
             icon: iconblue,
@@ -2672,11 +2683,13 @@ let marker_Wqua = (d) => {
             // data: dat
         });
         marker.addTo(map)
-        marker.bindPopup(`<div style="font-family:'Kanit'; font-size: 15px;"> 
+        marker.bindPopup(`<div style="font-family:'Kanit'; font-size: 14px;"> 
+                        <b> ข้อมูลล่าสุด ณ จุดตรวจคุณภาพน้ำผิวดิน </b> <br>
+                        วันที่: ${i.date} เวลา: ${i.time} น. <br>
                         ชื่อสถานี : ${i.staname} <br>
-                        ค่า pH : ${Number(i.ph).toFixed(1)}<br>
+                        ค่าความเป็นกรด-เบส : ${Number(i.ph).toFixed(1)}<br>
                         ค่าการนำไฟฟ้า : ${Number(i.ec).toFixed(1)} µS/cm<br>
-                        ค่า DO : ${Number(i.do).toFixed(1)} ppm<br>
+                        ค่าออกซิเจนละลายในน้ำ : ${Number(i.do).toFixed(1)} ppm<br>
                         อุณหภูมิ : ${Number(i.tmp).toFixed(1)} องศาเซลเซียส<br>
                         ดูกราฟ <span style="font-size: 20px; color:#006fa2; cursor: pointer;" onclick="WquaModal('${i.staname}')"><i class="bi bi-file-earmark-bar-graph"></i></span>
                         </div>`)
@@ -2738,13 +2751,17 @@ let WquaModal = (stname) => {
             });
         })
     })
-
+    $('#chart_sta2').text(stname).hide()
+    setTimeout(() => {
+        $("#WquaModal").modal("show");
+    }, 1500)
     setTimeout(() => {
         // console.log(arrDept, arrTemp, arrHumi);
-        Wquachart(arrPh, "pHChart", "ค่า pH");
+        $('#chart_sta2').fadeIn();
+        Wquachart(arrPh, "pHChart", "ค่าความเป็นกรด-เบส");
         Wquachart(arrEC, "ECChart", "ค่าการนำไฟฟ้า (µS/cm)");
         Wquachart(arrTemp, "TempChart", "อุณหภูมิ (°C)");
-        Wquachart(arrDO, "DOChart", "ค่า DO (ppm)");
+        Wquachart(arrDO, "DOChart", "ค่าออกซิเจนละลายในน้ำ (ppm)");
     }, 500)
 
 
